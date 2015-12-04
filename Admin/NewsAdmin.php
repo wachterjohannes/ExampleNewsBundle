@@ -12,6 +12,22 @@ class NewsAdmin extends Admin
     {
         $rootNavigationItem = new NavigationItem($title);
 
+        $section = new NavigationItem('navigation.webspaces');
+
+        $global = new NavigationItem('navigation.global-content');
+        $section->addChild($global);
+
+        $news = new NavigationItem('navigation.news');
+        $news->setAction('news');
+        $global->addChild($news);
+
+        $rootNavigationItem->addChild($section);
+
         $this->setNavigation(new Navigation($rootNavigationItem));
+    }
+
+    public function getJsBundleName()
+    {
+        return 'examplenews';
     }
 }
