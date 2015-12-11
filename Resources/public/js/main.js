@@ -22,6 +22,13 @@ define(function() {
                     return '<p>Hello awesome sulu world!</p>'
                 }
             });
+
+            app.sandbox.mvc.routes.push({
+                route: 'news/add',
+                callback: function() {
+                    return '<div data-aura-component="news/form@examplenews"/>';
+                }
+            });
         }
     };
 });
