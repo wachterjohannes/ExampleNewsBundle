@@ -10,6 +10,22 @@ use Symfony\Component\HttpFoundation\Response;
 class NewsController extends RestController
 {
     /**
+     * Returns news-item by id.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function getNewsAction($id)
+    {
+        return $this->handleView(
+            $this->view(
+                $this->getManager()->read($id)
+            )
+        );
+    }
+
+    /**
      * Create a new news-item and returns it.
      *
      * @param Request $request

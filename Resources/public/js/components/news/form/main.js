@@ -1,9 +1,9 @@
-define(['text!./form.html'], function(form) {
+define(['jquery', 'underscore', 'text!./form.html'], function($, _, form) {
 
     var defaults = {
         templates: {
             form: form,
-            url: '/admin/api/news'
+            url: '/admin/api/news<% if (!!id) { %>/<%= id %><% } %>'
         },
         translations: {
             title: 'public.title',
@@ -46,7 +46,10 @@ define(['text!./form.html'], function(form) {
         render: function() {
             this.$el.html(this.templates.form({translations: this.translations}));
 
-            this.sandbox.form.create('#news-form');
+            this.form = this.sandbox.form.create('#news-form');
+            this.form.initialized.then(function() {
+                this.sandbox.form.setData('#news-form', this.data || {});
+            }.bind(this));
         },
 
         bindDomEvents: function() {
@@ -64,9 +67,10 @@ define(['text!./form.html'], function(form) {
                 return;
             }
 
-            var data = this.sandbox.form.getData('#news-form');
+            var data = this.sandbox.form.getData('#news-form'),
+                url = this.templates.url({id: this.options.id});
 
-            this.sandbox.util.save(this.templates.url(), 'POST', data).then(function(response) {
+            this.sandbox.util.save(url, !this.options.id ? 'POST' : 'PUT', data).then(function(response) {
                 this.afterSave(response, action);
             }.bind(this));
         },
@@ -81,6 +85,22 @@ define(['text!./form.html'], function(form) {
             } else if (!this.options.id) {
                 this.sandbox.emit('sulu.router.navigate', 'news/edit:' + response.id);
             }
+        },
+
+        loadComponentData: function() {
+            var promise = $.Deferred();
+
+            if (!this.options.id) {
+                promise.resolve();
+
+                return promise;
+            }
+
+            this.sandbox.util.load(_.template(defaults.templates.url, {id: this.options.id})).done(function(data) {
+                promise.resolve(data);
+            });
+
+            return promise;
         }
     };
 });
