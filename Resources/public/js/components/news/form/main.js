@@ -1,5 +1,18 @@
-define(function() {
+define(['text!./form.html'], function(form) {
+
+    var defaults = {
+        templates: {
+            form: form
+        },
+        translations: {
+            title: 'public.title',
+            teaser: 'news.teaser'
+        }
+    };
+
     return {
+
+        defaults: defaults,
 
         header: {
             title: function() {
@@ -23,7 +36,11 @@ define(function() {
         },
 
         initialize: function() {
-            this.$el.html('<h1>Hello awesome sulu world</h1>');
+            this.render();
+        },
+
+        render: function() {
+            this.$el.html(this.templates.form({translations: this.translations}));
         }
     };
 });
