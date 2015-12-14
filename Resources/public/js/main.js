@@ -19,7 +19,7 @@ define(function() {
             app.sandbox.mvc.routes.push({
                 route: 'news',
                 callback: function() {
-                    return '<p>Hello awesome sulu world!</p>'
+                    return '<div data-aura-component="news/list@examplenews"/>';
                 }
             });
 
