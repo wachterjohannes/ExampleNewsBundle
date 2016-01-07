@@ -89,6 +89,7 @@ class NewsManager
     public function delete($id)
     {
         $this->entityManager->remove($this->read($id));
+        $this->entityManager->flush();
     }
 
     /**

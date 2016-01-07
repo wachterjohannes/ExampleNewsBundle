@@ -128,6 +128,7 @@ class NewsController extends RestController
     /**
      * Update a news-item with given id and returns it.
      *
+     * @param int $id
      * @param Request $request
      *
      * @return Response
@@ -139,6 +140,20 @@ class NewsController extends RestController
                 $this->getManager()->update($id, $request->request->all())
             )
         );
+    }
+
+    /**
+     * Delete a news-item with given id.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function deleteNewsAction($id)
+    {
+        $this->getManager()->delete($id);
+
+        return $this->handleView($view = $this->view(null, 204));
     }
 
     /**
