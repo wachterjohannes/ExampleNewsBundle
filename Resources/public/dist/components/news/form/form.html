@@ -1,0 +1,10 @@
+<form id="news-form" class="grid">
+    <div class="form-group grid-row">
+        <label for="news-title"><%= translations.title %></label>
+        <input type="text" id="news-title" name="title" class="form-element input-bold" data-mapper-property="title" data-validation-required="true"/>
+    </div>
+    <div class="form-group">
+        <label for="news-teaser"><%= translations.teaser %></label>
+        <textarea id="news-teaser" name="teaser" class="form-element"  data-mapper-property="teaser" data-validation-required="true"></textarea>
+    </div>
+</form>
